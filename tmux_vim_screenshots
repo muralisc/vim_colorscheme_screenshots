@@ -13,8 +13,8 @@ do
     tmux send-keys -t:4 '\s'
     tmux send-keys -t:4 C-n
     tmux send-keys -t:4 'fm'
-    tmux send-keys -t:4 '/modi' C-m
     tmux send-keys -t:4 'dv'
+    tmux send-keys -t:4 '/li' C-m
     # // diff created
     sleep 1
     tmux send-keys -t:3 "scrot ${currentScheme}.png" C-m
