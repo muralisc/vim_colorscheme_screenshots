@@ -1,0 +1,24 @@
+#!/bin/bash
+# tmux 
+cSchemes=`ls -1 ~/.vim/bundle/vim-colorschemes/colors | sed 's/.vim$//'`
+# tmux new-window -t:3
+# tmux new-window -t:4
+tmux send-keys -t:4 'cd ~/webq/' C-m
+for currentScheme in $cSchemes
+do
+    sed -i "s/^colorscheme .*/colorscheme $currentScheme/" ~/.vimrc
+    tmux select-window -t:4
+    # // open vim and create a diff
+    tmux send-keys -t:4 'vim' C-m
+    tmux send-keys -t:4 '\s'
+    tmux send-keys -t:4 C-n
+    tmux send-keys -t:4 'fm'
+    tmux send-keys -t:4 '/modi' C-m
+    tmux send-keys -t:4 'dv'
+    # // diff created
+    sleep 1
+    tmux send-keys -t:3 "scrot ${currentScheme}.png" C-m
+    tmux send-keys -t:4 ':qa' C-m
+done
+tmux select-window -t:1
+eog *.png
