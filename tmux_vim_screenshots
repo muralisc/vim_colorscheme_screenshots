@@ -3,22 +3,38 @@
 cSchemes=`ls -1 ~/.vim/bundle/vim-colorschemes/colors | sed 's/.vim$//'`
 # tmux new-window -t:3
 # tmux new-window -t:4
-tmux send-keys -t:4 'cd ~/webq/' C-m
+tmux send-keys -t:4 'cd ~/tst/' C-m
+tmux send-keys -t:3 'cd ~/tst/' C-m
 for currentScheme in $cSchemes
 do
     sed -i "s/^colorscheme .*/colorscheme $currentScheme/" ~/.vimrc
     tmux select-window -t:4
-    # // open vim and create a diff
+
+    # // open vim and creat a dropdown
+    tmux send-keys -t:4 'vim ~/webq/TokenGenNew/proxy1.c' C-m
+    sleep 0.5
+    tmux send-keys -t:4 'gg'
+    tmux send-keys -t:4 '/li' C-m
+    tmux send-keys -t:4 'A' Tab Tab Tab 'lis' C-n
+    sleep 0.5
+    tmux send-keys -t:3 "scrot ${currentScheme}.png" C-m
+    tmux send-keys -t:4 Escape
+    tmux send-keys -t:4 ':qa!' C-m
+    sleep 0.5
+
+    # // create diff screenshot 
     tmux send-keys -t:4 'vim' C-m
+    sleep 0.1
     tmux send-keys -t:4 '\s'
     tmux send-keys -t:4 C-n
     tmux send-keys -t:4 'fm'
     tmux send-keys -t:4 'dv'
+    tmux send-keys -t:4 'gg'
     tmux send-keys -t:4 '/li' C-m
     # // diff created
-    sleep 1
-    tmux send-keys -t:3 "scrot ${currentScheme}.png" C-m
+    sleep 0.5
+    tmux send-keys -t:3 "scrot ${currentScheme}1.png" C-m
     tmux send-keys -t:4 ':qa' C-m
+    # break
 done
 tmux select-window -t:1
-eog *.png
