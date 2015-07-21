@@ -1,0 +1,8 @@
+line 1 will be removed
+line 2
+line 3
+line 4
+
+some other lines 
+lorem ipsu m bla bal
+
