@@ -1,7 +1,7 @@
-line 1 will be removed
 line 2
-line 3
+line 3 is changed
 line 4
+line 5 is added
 
 some other lines 
 lorem ipsu m bla bal
