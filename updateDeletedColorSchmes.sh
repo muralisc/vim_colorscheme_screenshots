@@ -1,11 +1,13 @@
 #!/bin/bash
 
 case $* in
-    create)
+    *)
+    # create)
         # move to a separate file -> create_lists
         # tar tf vimCSscreenshots.tgz > allColorSchemes.list
         ls -1 *[^1].png > notDeleted.list
         comm -13 notDeleted.list allColorSchemes.list > Deleted.list
+        cp Deleted.list ~/.vim/bundle/vim-colorschemes/colors/
         # SORT BY BRIGHTNESS
         # for i in *.png
         # do
@@ -14,29 +16,23 @@ case $* in
         # column -t seprateByBrightness.list | sort -nr -k2 | cut -d ' ' -f 1 > sortedByBrightness.list
         # sed -n '1,/tabula/ p' sortedByBrightness.list > lighter.list
         # sed '1,/tabula/ d' sortedByBrightness.list > darker.list
-        ;;
-    both)
+        echo "del list cre4ated"
+        # ;;
+    # both)
         # move to a separate file -> deleteBadColorschemes, check for existance of all files
         echo "both"
         cd ~/.vim/bundle/vim-colorschemes/colors/
         git reset HEAD --hard
-        for i in `cat ~/Downloads/vim_ColorSch_screenshots/Deleted.list| sed 's/.png$/.vim/'`
+        for i in `cat Deleted.list| sed 's/.png$/.vim/'`
         do
             rm $i
         done
         ;;
     crop)
-        # crop screenshots to reamove 
+        # crop screenshots to reamove
         for i in `ls *.png`
         do
             convert -crop 1915x1044+1+18 $i $i
         done
         ;;
-    *)
-        echo "
-        Do one of the following:
-        create - create the delted list
-        both - delete the unwanted files from the git repo
-        crop
-        "
 esac
